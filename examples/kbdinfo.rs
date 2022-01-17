@@ -4,7 +4,6 @@
 use a800xl_utils::{
     clock, consts,
     screen::{clrscr, gotoxy, show_cursor},
-    wait_vbl,
 };
 use core::panic::PanicInfo;
 use ufmt_stdio::*;
@@ -15,7 +14,7 @@ fn panic(_info: &PanicInfo) -> ! {
 }
 
 #[start]
-fn main(argc: isize, argv: *const *const u8) -> isize {
+fn main(_argc: isize, _argv: *const *const u8) -> isize {
     println!("Hello World!");
     show_cursor(false);
     clrscr();
