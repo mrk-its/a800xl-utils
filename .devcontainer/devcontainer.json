@@ -1,4 +1,11 @@
 {
   "image": "mrkits/rust-mos",
-  "extensions": ["matklad.rust-analyzer", "serayuzgur.crates"]
+  "extensions": ["matklad.rust-analyzer", "serayuzgur.crates"],
+  "settings": {
+    "rust-analyzer.checkOnSave.allTargets": false,
+    "rust-analyzer.diagnostics.disabled": [
+        "unresolved-macro-call",
+        "macro-error"
+    ]
+  }
 }
