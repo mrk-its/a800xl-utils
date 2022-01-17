@@ -7,6 +7,10 @@ pub fn hide_cursor(hide: bool) {
     }
 }
 
+pub fn clear_atract() {
+    unsafe {*consts::ATRACT = 0}
+}
+
 pub fn gotoxy(x: usize, y: usize) {
     // save x y in COLCRS (2 bytes), ROWCRS (1 byte)
     // call setcursor
