@@ -4,13 +4,13 @@ use volatile_register::{RO, RW};
 pub mod consts;
 pub mod screen;
 
-pub fn io_write<T: Copy>(addr: usize, value: T) {
+pub fn volatile_write<T: Copy>(addr: *mut T, value: T) {
     unsafe {
         (*(addr as *const RW<T>)).write(value);
     }
 }
 
-pub fn io_read<T: Copy>(addr: usize) -> T {
+pub fn volatile_read<T: Copy>(addr: *const T) -> T {
     unsafe { (*(addr as *const RO<T>)).read() }
 }
 
@@ -28,8 +28,8 @@ pub fn clock() -> u32 {
 
 pub fn wait_vbl() {
     unsafe {
-        let clkaddr = consts::RTCLOK.add(2) as usize;
-        let v = io_read::<u8>(clkaddr);
-        while io_read::<u8>(clkaddr) == v {}
+        let clkaddr = consts::RTCLOK.add(2);
+        let v = volatile_read::<u8>(clkaddr);
+        while volatile_read::<u8>(clkaddr) == v {}
     }
 }
