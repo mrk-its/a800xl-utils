@@ -1,0 +1,31 @@
+[package]
+name = "a800xl-utils"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+volatile-register = "0"
+ufmt = "0"
+ufmt-write = "0"
+
+[dev-dependencies]
+ufmt-stdio = "0"
+
+[profile.dev]
+lto = true
+opt-level = 1
+
+[profile.release]
+lto = true
+
+[[example]]
+name = "clrscr"
+panic = "abort"
+
+[patch.crates-io]
+ufmt = {git="https://github.com/mrk-its/ufmt", branch="ptr_width_16_fix"}
+ufmt-write = {git="https://github.com/mrk-its/ufmt", branch="ptr_width_16_fix"}
+
+ufmt-stdio = {path="../ufmt-stdio"}

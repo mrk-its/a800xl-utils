@@ -1,0 +1,9 @@
+[build]
+target = "mos-a800xl-none"
+rustflags = "-C panic=abort"
+
+[unstable]
+build-std = ["core"]
+
+[target.mos-a800xl-none]
+runner = ["/bin/echo", "can't run"]
