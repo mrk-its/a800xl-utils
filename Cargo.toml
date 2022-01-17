@@ -29,12 +29,15 @@ lto = true
 
 [[example]]
 name = "kbdinfo"
-panic = "abort"
+# panic = "abort"
 
 [[example]]
 name = "heap"
-panic = "abort"
+# panic = "abort"
 
+[[example]]
+name = "mini"
+# panic = "abort"
 
 [patch.crates-io]
 ufmt = {git="https://github.com/mrk-its/ufmt", branch="ptr_width_16_fix"}
