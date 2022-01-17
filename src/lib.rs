@@ -1,8 +1,8 @@
 #![no_std]
 
 use volatile_register::{RO, RW};
-pub mod screen;
 pub mod consts;
+pub mod screen;
 
 pub fn io_write<T: Copy>(addr: usize, value: T) {
     unsafe {
@@ -16,7 +16,20 @@ pub fn io_read<T: Copy>(addr: usize) -> T {
 
 pub fn clock() -> u32 {
     unsafe {
-        let x = [*consts::RTCLOK.add(2), *consts::RTCLOK.add(1), *consts::RTCLOK, 0];
+        let x = [
+            *consts::RTCLOK.add(2),
+            *consts::RTCLOK.add(1),
+            *consts::RTCLOK,
+            0,
+        ];
         *(&x as *const u8 as *const u32)
+    }
+}
+
+pub fn wait_vbl() {
+    unsafe {
+        let clkaddr = consts::RTCLOK.add(2) as usize;
+        let v = io_read::<u8>(clkaddr);
+        while io_read::<u8>(clkaddr) == v {}
     }
 }

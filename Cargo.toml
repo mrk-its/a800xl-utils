@@ -21,11 +21,10 @@ opt-level = 1
 lto = true
 
 [[example]]
-name = "clrscr"
+name = "kbdinfo"
 panic = "abort"
 
 [patch.crates-io]
 ufmt = {git="https://github.com/mrk-its/ufmt", branch="ptr_width_16_fix"}
-ufmt-write = {git="https://github.com/mrk-its/ufmt", branch="ptr_width_16_fix"}
-
-ufmt-stdio = {path="../ufmt-stdio"}
+ufmt-write = {git = "https://github.com/mrk-its/ufmt", branch="ptr_width_16_fix"}
+ufmt-stdio = {git = "https://github.com/mrk-its/ufmt-stdio", branch="mos"}

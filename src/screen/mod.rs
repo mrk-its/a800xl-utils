@@ -1,47 +1,43 @@
-use ufmt_write::uWrite;
 use crate::consts;
+use ufmt_write::uWrite;
 
-pub fn hide_cursor(hide: bool) {
+/// shows / hides text cursor
+pub fn show_cursor(visible: bool) {
     unsafe {
-        *crate::consts::CRSINH = hide as u8;
+        *crate::consts::CRSINH = !visible as u8;
     }
 }
 
+/// resets ATRACT (screen saver counter)
 pub fn clear_atract() {
-    unsafe {*consts::ATRACT = 0}
+    unsafe { *consts::ATRACT = 0 }
 }
 
+/// moves text cursor to specified position
 pub fn gotoxy(x: usize, y: usize) {
-    // save x y in COLCRS (2 bytes), ROWCRS (1 byte)
-    // call setcursor
-    // restore char under old cursor *OLDADR = OLDCHR
-    // OLDADDR = 40 * ROWCRS + COLCRS
-    // store char under a cursor OLDCHR = *OLDADDR
-    // update inverse bit of char under cursor according to CRSINH
-
     unsafe {
-        *crate::consts::ROWCRS = y as u8;
-        *crate::consts::COLCRS = x as u16;
+        **consts::OLDADR = *consts::OLDCHR;
+        *consts::OLDADR = (*consts::SAVMSC).add(40 * y + x);
+        let c = **consts::OLDADR;
+        *consts::OLDCHR = c;
+        if *consts::CRSINH == 0 {
+            **consts::OLDADR |= 0x80;
+        }
+        *consts::ROWCRS = y as u8;
+        *consts::COLCRS = x as u16;
     }
-
-    // *COLCRS = x as u8;
-    // *ROWCRS = y;
-
-    // write_io(*OLDADDR, *OLDCHR);
-
-    // *OLDADDR = 40 * y + x;
-
-
 }
 
+/// clears screen (for now only text gr0 mode)
 pub fn clrscr() {
     let scr_slice = unsafe {
-        let scr_addr: u16 = *consts::SAVMSC;
-        core::slice::from_raw_parts_mut(scr_addr as *mut u8, 40 * 24)
+        let scr_addr = *consts::SAVMSC;
+        core::slice::from_raw_parts_mut(scr_addr, 40 * 24)
     };
     scr_slice.fill(0);
 }
 
+/// converts atascii code to screen code
 pub fn atascii_to_screen(b: u8) -> u8 {
     (match b & 0x7f {
         0..=31 => b + 64,
@@ -50,6 +46,8 @@ pub fn atascii_to_screen(b: u8) -> u8 {
     }) | (b & 128)
 }
 
+/// [ufmt::uWrite] implementation for writing directly to screen memory
+/// (it converts atascii text to screen codes)
 pub struct ScreenMemoryWriter<'a> {
     buffer: &'a mut [u8],
     written: usize,
@@ -67,7 +65,7 @@ impl<'a> uWrite for ScreenMemoryWriter<'a> {
     fn write_str(&mut self, s: &str) -> Result<(), Self::Error> {
         for b in s.bytes().map(atascii_to_screen) {
             if self.written >= self.buffer.len() {
-                return Err(())
+                return Err(());
             }
             self.buffer[self.written] = b;
             self.written += 1;
