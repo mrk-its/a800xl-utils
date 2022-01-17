@@ -1,7 +1,12 @@
 #![no_std]
 
+use core::panic::PanicInfo;
 use volatile_register::{RO, RW};
+use ufmt_stdio::*;
+
+
 pub mod consts;
+pub mod heap;
 pub mod screen;
 
 pub fn volatile_write<T: Copy>(addr: *mut T, value: T) {
@@ -32,4 +37,10 @@ pub fn wait_vbl() {
         let v = volatile_read::<u8>(clkaddr);
         while volatile_read::<u8>(clkaddr) == v {}
     }
+}
+
+#[panic_handler]
+fn panic(_info: &PanicInfo) -> ! {
+    println!("PANIC!");
+    loop {}
 }

@@ -16,9 +16,9 @@ readme = "README.md"
 volatile-register = "0"
 ufmt = "0"
 ufmt-write = "0"
+ufmt-stdio = "0"
 
 [dev-dependencies]
-ufmt-stdio = "0"
 
 [profile.dev]
 lto = true
@@ -30,6 +30,11 @@ lto = true
 [[example]]
 name = "kbdinfo"
 panic = "abort"
+
+[[example]]
+name = "heap"
+panic = "abort"
+
 
 [patch.crates-io]
 ufmt = {git="https://github.com/mrk-its/ufmt", branch="ptr_width_16_fix"}

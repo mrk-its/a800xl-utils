@@ -5,19 +5,13 @@ use a800xl_utils::{
     clock, consts,
     screen::{clrscr, gotoxy, show_cursor},
 };
-use core::panic::PanicInfo;
 use ufmt_stdio::*;
-
-#[panic_handler]
-fn panic(_info: &PanicInfo) -> ! {
-    loop {}
-}
 
 #[start]
 fn main(_argc: isize, _argv: *const *const u8) -> isize {
-    println!("Hello World!");
     show_cursor(false);
     clrscr();
+    gotoxy(2, 0);
     loop {
         let ch = unsafe { *consts::CH };
         gotoxy(2, 2);
