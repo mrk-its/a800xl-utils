@@ -3,7 +3,7 @@
 #[allow(unused_imports)]
 
 use a800xl_utils;  // installs panic handler
-
+use ufmt_stdio::println;
 use core::panic::PanicInfo;
 
 #[panic_handler]

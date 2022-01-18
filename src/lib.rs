@@ -1,12 +1,8 @@
 #![no_std]
 
-use core::panic::PanicInfo;
 use volatile_register::{RO, RW};
-use ufmt_stdio::*;
-
 
 pub mod consts;
-pub mod heap;
 pub mod screen;
 
 pub fn volatile_write<T: Copy>(addr: *mut T, value: T) {
