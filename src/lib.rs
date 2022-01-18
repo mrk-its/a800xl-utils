@@ -38,9 +38,3 @@ pub fn wait_vbl() {
         while volatile_read::<u8>(clkaddr) == v {}
     }
 }
-
-#[panic_handler]
-fn panic(_info: &PanicInfo) -> ! {
-    println!("PANIC!");
-    loop {}
-}

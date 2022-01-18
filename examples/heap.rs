@@ -8,6 +8,14 @@ use a800xl_utils::heap;
 use alloc::{string::ToString, vec, vec::Vec};
 use ufmt_stdio::*;
 
+use core::panic::PanicInfo;
+
+#[panic_handler]
+fn panic(_info: &PanicInfo) -> ! {
+    println!("PANIC!!!");
+    loop {}
+}
+
 #[start]
 fn main(_argc: isize, _argv: *const *const u8) -> isize {
     println!(
