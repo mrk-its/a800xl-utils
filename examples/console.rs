@@ -1,5 +1,6 @@
 #![no_std]
 #![feature(start)]
+#![feature(core_intrinsics)]
 
 use a800xl_utils::{
     clock, consts,
@@ -36,5 +37,6 @@ fn main(_argc: isize, _argv: *const *const u8) -> isize {
             break;
         }
     }
+    show_cursor(true);
     0
 }

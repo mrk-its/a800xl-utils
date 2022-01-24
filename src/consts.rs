@@ -5,7 +5,12 @@ pub const LMARGN: *mut u8 = 0x52 as *mut u8;
 pub const RMARGN: *mut u8 = 0x53 as *mut u8;
 pub const ROWCRS: *mut u8 = 0x54 as *mut u8;
 pub const COLCRS: *mut u16 = 0x55 as *mut u16;
+
+pub const RAMTOP: *mut u8 = 0x6A as *mut u8;
+
 pub const SAVMSC: *mut *mut u8 = 0x58 as *mut *mut u8;
+pub const OLDROW: *mut u8 = 0x5a as *mut u8;
+pub const OLDCOL: *mut u16 = 0x5b as *mut u16;
 pub const OLDCHR: *mut u8 = 0x5d as *mut u8;
 pub const OLDADR: *mut *mut u8 = 0x5e as *mut *mut u8;
 
@@ -28,6 +33,7 @@ pub const COLOR3: *mut u8 = 0x2c7 as *mut u8;
 pub const COLOR4: *mut u8 = 0x2c8 as *mut u8;
 
 pub const KEYDEL: *mut u8 = 0x2f1 as *mut u8;
+pub const ATACHR: *mut u8 = 0x02fb as *mut u8; // color for drawto
 pub const CH: *mut u8 = 0x2fc as *mut u8;
 pub const CH1: *mut u8 = 0x2f2 as *mut u8;
 pub const SHFLOK: *mut u8 = 0x2be as *mut u8;
@@ -35,3 +41,6 @@ pub const NOCLIK: *mut u8 = 0x2db as *mut u8;
 
 pub const CONSOL: *mut u8 = 0xd01f as *mut u8;
 pub const SKSTAT: *mut u8 = 0xd20f as *mut u8;
+pub const RANDOM: *mut u8 = 0xd20a as *mut u8;
+
+pub const LLVM_MOS_SOFT_STACK_PTR: *mut *mut u8 = 0x80 as *mut *mut u8;

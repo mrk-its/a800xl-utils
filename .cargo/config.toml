@@ -1,6 +1,6 @@
 [build]
 target = "mos-a800xl-none"
-rustflags = "-C panic=abort"
+rustflags = "-C panic=abort" # -C link-args=-Wl,--oformat=elf"
 
 [unstable]
 build-std = ["core", "alloc"]

@@ -1,19 +1,21 @@
 #![no_std]
 #![feature(start)]
-#[allow(unused_imports)]
+#![feature(core_intrinsics)]
 
-use a800xl_utils;  // installs panic handler
-use ufmt_stdio::println;
+use a800xl_utils::cio::{Cmd, IOCB};
 use core::panic::PanicInfo;
+use ufmt_stdio::*;
 
 #[panic_handler]
 fn panic(_info: &PanicInfo) -> ! {
     println!("PANIC!!!");
-    loop {}
+    unsafe {
+        core::intrinsics::abort();
+    }
 }
 
 #[start]
 fn main(_argc: isize, _argv: *const *const u8) -> isize {
-    assert!(false);
+    IOCB::new(0).cmd(Cmd::PutBytes as u8).buffer(b"\x7d").call();
     0
 }

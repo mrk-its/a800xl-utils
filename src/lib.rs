@@ -2,7 +2,9 @@
 
 use volatile_register::{RO, RW};
 
+pub mod cio;
 pub mod consts;
+pub mod fs;
 pub mod screen;
 
 pub fn volatile_write<T: Copy>(addr: *mut T, value: T) {
@@ -33,4 +35,13 @@ pub fn wait_vbl() {
         let v = volatile_read::<u8>(clkaddr);
         while volatile_read::<u8>(clkaddr) == v {}
     }
+}
+
+pub fn get_soft_stack_ptr() -> *const u8 {
+    unsafe { *consts::LLVM_MOS_SOFT_STACK_PTR }
+}
+
+#[inline(always)]
+pub fn random() -> u8 {
+    volatile_read::<u8>(consts::RANDOM)
 }

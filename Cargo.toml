@@ -11,6 +11,8 @@ readme = "README.md"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[build-dependencies]
+cc = "1"
 
 [dependencies]
 volatile-register = "0"
@@ -26,12 +28,19 @@ opt-level = 1
 
 [profile.release]
 lto = true
+opt-level = "s"
 
 [[example]]
-name = "kbdinfo"
+name = "cls"
 
 [[example]]
-name = "mini"
+name = "console"
+
+[[example]]
+name = "files"
+
+[[example]]
+name = "gfx"
 
 [patch.crates-io]
 ufmt = {git="https://github.com/mrk-its/ufmt", branch="ptr_width_16_fix"}
