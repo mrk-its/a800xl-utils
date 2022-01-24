@@ -1,5 +1,6 @@
 pub const IOCB_PTR: *mut _IOCB = 0x340 as *mut _IOCB;
 
+/// Possible IOCB commands
 #[repr(u8)]
 pub enum Cmd {
     Open = 0x3,
@@ -11,6 +12,7 @@ pub enum Cmd {
     Status = 0xd,
 }
 
+/// Possible channel opening modes
 #[repr(u8)]
 pub enum Mode {
     Read = 4,
@@ -35,6 +37,7 @@ pub struct _IOCB {
     icax: [u8; 6],
 }
 
+/// helper for constructing single IOCB request using builder pattern
 pub struct IOCB {
     channel: u8,
 }
@@ -109,6 +112,7 @@ impl IOCB {
     }
 }
 
+/// returns first available (closed) CIO channel
 pub fn find_available_channel() -> Result<u8, u8> {
     for channel in 0..8 {
         let iocb = unsafe { &*IOCB_PTR.add(channel as usize) };

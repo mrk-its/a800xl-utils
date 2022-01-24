@@ -2,19 +2,19 @@ use crate::cio::{Cmd, IOCB};
 use crate::consts;
 use ufmt_write::uWrite;
 
-/// shows / hides text cursor
+/// show / hide text cursor
 pub fn show_cursor(visible: bool) {
     unsafe {
         *crate::consts::CRSINH = !visible as u8;
     }
 }
 
-/// resets ATRACT (screen saver counter)
+/// reset ATRACT (screen saver counter)
 pub fn clear_atract() {
     unsafe { *consts::ATRACT = 0 }
 }
 
-/// moves text cursor to specified position
+/// move text cursor to specified position
 pub fn gotoxy(x: i16, y: i16) {
     unsafe {
         **consts::OLDADR = *consts::OLDCHR;
@@ -28,6 +28,7 @@ pub fn gotoxy(x: i16, y: i16) {
     }
 }
 
+/// set current cursor position
 pub fn set_pos(x: i16, y: i16) {
     unsafe {
         *consts::COLCRS = x as u16;
@@ -35,12 +36,17 @@ pub fn set_pos(x: i16, y: i16) {
     }
 }
 
+/// set old cursor position (starting point for drawto)
+
 pub fn set_start_pos(x: i16, y: i16) {
     unsafe {
         *consts::OLDCOL = x as u16;
         *consts::OLDROW = y as u8;
     }
 }
+
+/// initialize BASIC-like graphics mode
+/// by opening 'S:' device on #6 CIO channel
 
 pub fn init_graphics(mode: u8, open_mode: u8) {
     IOCB::new(6)
@@ -51,20 +57,24 @@ pub fn init_graphics(mode: u8, open_mode: u8) {
         .call();
 }
 
+/// close #6 CIO channel
 pub fn close_graphics() {
     IOCB::new(6).cmd(Cmd::Close as u8).call();
 }
 
+/// draw line from (x, y) to (dx, dy)
 pub fn draw_line(x: i16, y: i16, dx: i16, dy: i16) {
     set_start_pos(x, y);
     draw_to(dx, dy);
 }
 
+/// draw line from last position to (dx, dy)
 pub fn draw_to(dx: i16, dy: i16) {
     set_pos(dx, dy);
     IOCB::new(6).cmd(17).icax1(12).icax2(0).call();
 }
 
+/// set color for next plot / draw operation
 pub fn set_color(color: u8) {
     unsafe {
         *consts::ATACHR = color;
@@ -80,8 +90,9 @@ pub fn plot(x: i16, y: i16) {
         .call_with_a(color);
 }
 
-/// clears screen (for now only text gr0 mode)
+/// clear screen (for now only text gr0 mode)
 pub fn clrscr() {
+    // TODO: support other graphics modes
     let scr_slice = unsafe {
         let scr_addr = *consts::SAVMSC;
         core::slice::from_raw_parts_mut(scr_addr, 40 * 24)
@@ -89,7 +100,7 @@ pub fn clrscr() {
     scr_slice.fill(0);
 }
 
-/// converts atascii code to screen code
+/// convert atascii code to screen code
 pub fn atascii_to_screen(b: u8) -> u8 {
     (match b & 0x7f {
         0..=31 => b + 64,

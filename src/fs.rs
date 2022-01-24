@@ -5,10 +5,14 @@ pub struct File {
 }
 
 impl File {
+    /// open file for writing
+    /// filename must end with \x9b
     pub fn create(filename: &[u8]) -> Result<File, u8> {
         File::open_with_mode(filename, Mode::Write)
     }
 
+    /// open file for reading
+    /// filename must end with \x9b
     pub fn open(filename: &[u8]) -> Result<File, u8> {
         File::open_with_mode(filename, Mode::Read)
     }
@@ -27,6 +31,7 @@ impl File {
         Ok(File { channel })
     }
 
+    /// write data to file
     pub fn write(&mut self, data: &[u8]) -> Result<(), u8> {
         let ret = IOCB::new(self.channel)
             .cmd(Cmd::PutBytes as u8)
@@ -38,6 +43,8 @@ impl File {
         Ok(())
     }
 
+    /// read data from file into provided buffer
+    /// returns number of bytes read or error code
     pub fn read(&mut self, data: &mut [u8]) -> Result<usize, u8> {
         let mut iocb = IOCB::new(self.channel);
         iocb.cmd(Cmd::GetBytes as u8).buffer(data);
@@ -48,6 +55,8 @@ impl File {
         Ok(iocb.get_buf_len())
     }
 
+    /// close related CIO channel. Channel is auto-closed
+    /// when file goes out of scope
     pub fn close(&mut self) {
         if self.channel < 128 {
             IOCB::new(self.channel).cmd(Cmd::Close as u8).call();
