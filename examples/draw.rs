@@ -5,11 +5,9 @@
 #[allow(unused_imports)]
 use a800xl_utils;
 use a800xl_utils::{
-    cio::{Cmd, Mode, IOCB},
     consts,
-    fs::File,
-    get_soft_stack_ptr, random,
-    screen::{close_graphics, draw_line, init_graphics, plot, set_color, set_pos, set_start_pos},
+    random,
+    screen::{close_graphics, draw_line, init_graphics, set_color},
 };
 
 use core::panic::PanicInfo;
@@ -18,6 +16,7 @@ use ufmt_stdio::*;
 #[panic_handler]
 fn panic(_info: &PanicInfo) -> ! {
     println!("PANIC!!!");
+    #[allow(unused_unsafe)]
     unsafe {
         core::intrinsics::abort();
     }
@@ -28,7 +27,7 @@ fn in_bounds(x: i16, y: i16) -> bool {
 }
 
 // [int(math.sin(2 * math.pi * i / 256) * 128) for i in range(256)]
-static sin_table: [u8; 256] = [
+static SIN_TABLE: [u8; 256] = [
     0x00, 0x03, 0x06, 0x09, 0x0c, 0x0f, 0x12, 0x15, 0x18, 0x1b, 0x1e, 0x21, 0x24, 0x27, 0x2a, 0x2d,
     0x30, 0x33, 0x36, 0x39, 0x3b, 0x3e, 0x41, 0x43, 0x46, 0x49, 0x4b, 0x4e, 0x50, 0x52, 0x55, 0x57,
     0x59, 0x5b, 0x5e, 0x60, 0x62, 0x64, 0x66, 0x67, 0x69, 0x6b, 0x6c, 0x6e, 0x70, 0x71, 0x72, 0x74,
@@ -48,7 +47,7 @@ static sin_table: [u8; 256] = [
 ];
 
 fn sin(angle: u8) -> i16 {
-    sin_table[angle as usize] as i8 as i16
+    SIN_TABLE[angle as usize] as i8 as i16
 }
 
 fn cos(angle: u8) -> i16 {
@@ -85,7 +84,7 @@ fn draw_tree(x: i16, y: i16, height: i16, angle: u8, level: u8) {
 #[start]
 fn main(_argc: isize, _argv: *const *const u8) -> isize {
     // HACK: force screen memory below 0xa000
-    let ram_top_saved = unsafe { core::mem::replace(&mut *consts::RAMTOP, 0xa0) };
+    let _ram_top_saved = unsafe { core::mem::replace(&mut *consts::RAMTOP, 0xa0) };
     init_graphics(8, 4 + 8 + 16);
 
     set_color(1);

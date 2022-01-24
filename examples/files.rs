@@ -5,7 +5,7 @@
 #[allow(unused_imports)]
 use a800xl_utils;
 use a800xl_utils::{
-    cio::{Cmd, Mode, IOCB},
+    cio::{Cmd, IOCB},
     fs::File,
 };
 
@@ -15,6 +15,7 @@ use ufmt_stdio::*;
 #[panic_handler]
 fn panic(_info: &PanicInfo) -> ! {
     println!("PANIC!!!");
+    #[allow(unused_unsafe)]
     unsafe {
         core::intrinsics::abort();
     }
@@ -30,7 +31,7 @@ fn main(_argc: isize, _argv: *const *const u8) -> isize {
         Ok(file) => file,
     };
     println!("opened channel {} to write", file.channel);
-    for i in 0..3 {
+    for _ in 0..3 {
         if let Err(err) = file.write(b"ok!\x9b") {
             println!("write error: {}", err);
             return 1;

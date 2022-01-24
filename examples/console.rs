@@ -13,7 +13,10 @@ use core::panic::PanicInfo;
 #[panic_handler]
 fn panic(_info: &PanicInfo) -> ! {
     println!("PANIC!!!");
-    loop {}
+    #[allow(unused_unsafe)]
+    unsafe {
+        core::intrinsics::abort();
+    }
 }
 
 #[start]

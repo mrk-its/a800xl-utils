@@ -2,7 +2,7 @@ TARGET_DIR=target/mos-a800xl-none/release/examples
 DOS_ATR_TEMPLATE=examples/data/dos2d64.atr
 EXAMPLE_NAME=$(basename $(notdir $@))
 
-all: $(addprefix $(TARGET_DIR)/,gfx.done files.done console.done cls.done)
+all: $(addprefix $(TARGET_DIR)/, cls.done console.done draw.done files.done)
 
 clean:
 	cargo clean

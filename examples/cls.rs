@@ -9,6 +9,7 @@ use ufmt_stdio::*;
 #[panic_handler]
 fn panic(_info: &PanicInfo) -> ! {
     println!("PANIC!!!");
+    #[allow(unused_unsafe)]
     unsafe {
         core::intrinsics::abort();
     }

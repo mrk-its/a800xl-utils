@@ -10,12 +10,8 @@ https://docs.rs/a800xl-utils
 The easiest way is to use provided `devcontainer.json` configuration for vscode:
 
 1. Configure Visual Studio Code with `Remote - Containers` extension
-2. Open this project inside devcontainer
-3. on terminal run:
-    ```
-    cargo build --example kbdinfo --release
-    ```
-4. resulting atari executable (xex) is `target/mos-a800xl-none/release/examples/kbdinfo`
+2. Open this project inside devcontainer and type `make`
+3. The result is `examples.atr` containing all examples
 
 ## License
 
