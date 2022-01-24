@@ -1,6 +1,6 @@
 [package]
 name = "a800xl-utils"
-version = "0.1.3"
+version = "0.1.4"
 edition = "2021"
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/mrk-its/a800xl-utils"
@@ -11,6 +11,12 @@ readme = "README.md"
 exclude = ["examples/data/*"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[features]
+docs-rs = []
+
+[package.metadata.docs.rs]
+features = [ "docs-rs" ]
 
 [build-dependencies]
 cc = "1"
