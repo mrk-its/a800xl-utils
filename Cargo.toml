@@ -38,6 +38,9 @@ lto = true
 opt-level = "s"
 
 [[example]]
+name = "2048"
+
+[[example]]
 name = "cls"
 
 [[example]]
