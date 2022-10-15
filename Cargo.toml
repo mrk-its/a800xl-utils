@@ -23,7 +23,6 @@ cc = "1"
 
 [dependencies]
 volatile-register = "0"
-ufmt = "0"
 ufmt-write = "0"
 ufmt-stdio = "0"
 
