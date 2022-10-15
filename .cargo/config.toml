@@ -1,9 +1,9 @@
 [build]
-target = "mos-a800xl-none"
+target = "mos-atari8-none"
 rustflags = "-C panic=abort" # -C link-args=-Wl,--oformat=elf"
 
 [unstable]
 build-std = ["core", "alloc"]
 
-[target.mos-a800xl-none]
+[target.mos-atari8-none]
 runner = ["/bin/echo", "can't run"]

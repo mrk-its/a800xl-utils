@@ -1,4 +1,4 @@
-TARGET_DIR=target/mos-a800xl-none/release/examples
+TARGET_DIR=target/mos-atari8-none/release/examples
 DOS_ATR_TEMPLATE=examples/data/dos2d64.atr
 EXAMPLE_NAME=$(basename $(notdir $@))
 
