@@ -1,6 +1,6 @@
 [package]
 name = "a800xl-utils"
-version = "0.2.0"
+version = "0.2.1"
 edition = "2021"
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/mrk-its/a800xl-utils"
@@ -23,8 +23,8 @@ cc = "1"
 
 [dependencies]
 volatile-register = "0"
-ufmt-write = "0"
-ufmt-stdio = "0"
+ufmt-write = "0.1"
+ufmt-stdio = "0.3"
 
 [dev-dependencies]
 
@@ -50,6 +50,3 @@ name = "draw"
 
 [[example]]
 name = "files"
-
-[patch.crates-io]
-ufmt-stdio = {git = "https://github.com/mrk-its/ufmt-stdio"}
