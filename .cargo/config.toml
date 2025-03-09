@@ -1,5 +1,5 @@
 [build]
-target = "mos-atari8-none"
+target = "mos-atari8-dos"
 rustflags = "-C panic=abort" # -C link-args=-Wl,--oformat=elf"
 
 [unstable]

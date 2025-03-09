@@ -1,5 +1,6 @@
 #![no_std]
-#![feature(start)]
+#![no_main]
+#![allow(internal_features)]
 #![feature(core_intrinsics)]
 
 use a800xl_utils::cio::{Cmd, IOCB};
@@ -163,8 +164,8 @@ fn panic(_info: &PanicInfo) -> ! {
     }
 }
 
-#[start]
-fn main(_argc: isize, _argv: *const *const u8) -> isize {
+#[unsafe(export_name = "main")]
+fn main() -> () {
     let mut board = Board::default();
 
     board.put_random();
@@ -191,5 +192,4 @@ fn main(_argc: isize, _argv: *const *const u8) -> isize {
         }
     }
     show_cursor(true);
-    0
 }
