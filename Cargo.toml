@@ -24,7 +24,7 @@ cc = "1"
 [dependencies]
 volatile-register = "0"
 ufmt-write = "0.1"
-ufmt-stdio = "0.3"
+ufmt-stdio = "0.4"
 
 [dev-dependencies]
 
